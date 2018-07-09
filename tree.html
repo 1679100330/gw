@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="Font-Awesome-3.2.1/css/font-awesome.min.css"/>
+		<script src="js/gw.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="tree"></div>
+		<a href="javascript:void(0)" id="btn">获取checkbox为true的节点</a>
+		
+		<script type="text/javascript">
+			var tree = document.getElementById('tree');
+			var nodes = [
+				{"id":"1000","pid":"1001","name":"名称"},
+				{"id":"1001","pid":"#","name":"名称"},
+				{"id":"1002","pid":"#","name":"名称"},
+				{"id":"1003","pid":"1001","name":"名称"},
+				{"id":"1004","pid":"1001","name":"名称"},
+				{"id":"1005","pid":"1002","name":"名称"},
+				{"id":"1006","pid":"1004","name":"名称"},
+				{"id":"abc","pid":"1004","name":"名称"},
+				{"id":"1008","pid":"1003","name":"名称"},
+				{"id":"1009","pid":"1003","name":"名称"},
+				{"id":"1010","pid":"abc","name":"名称"},
+				{"id":"1011","pid":"abc","name":"名称"},
+				{"id":"1012","pid":"#","name":"名称"}
+			];
+			var settings = {
+				checkbox:'show'
+			};			
+			gw.tree.init(tree,nodes,settings);
+			var btn = document.getElementById('btn');
+			btn.onclick=function(){
+				var array = gw.tree.getChoosedNode();
+				alert(array);
+			}
+			var as = tree.getElementsByTagName('a');
+			for(var i=0;i<as.length;i++){
+				as[i].onclick=function(){
+					alert(this.getAttribute('id'));
+				}
+			}
+		</script>
+	</body>
+</html>
