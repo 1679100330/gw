@@ -2,7 +2,7 @@
 	function _gw(){}
 	_gw.prototype.sidebar=new function(){
 		return{
-			init:function(obj,nodes){
+			init:function(obj,nodes){				
 				//清除obj下的子节点
 				var childs = obj.childNodes;
 				for(var i=0;i<childs.length;i++){
@@ -29,6 +29,7 @@
 							var ul = document.createElement("ul");
 							ul.style.padding='0';
 							ul.style.margin='0';
+							ul.style.listStyle='none';
 							obj.appendChild(ul);
 						}						
 						var li = document.createElement("li");
@@ -36,35 +37,58 @@
 						li.setAttribute("level", "1");
 						li.style.width='100%';
 						li.style.display='block';
+						li.style.verticalAlign='middle';/*兼容IE 5.5-7 */
+						li.onmouseover=function(){
+							var aels = this.getElementsByTagName('a');
+							var spans = aels[0].getElementsByTagName('span');
+							spans[0].style.background='#629CC9';
+						}
+						li.onmouseout=function(){
+							var aels = this.getElementsByTagName('a');
+							var spans = aels[0].getElementsByTagName('span');
+							spans[0].style.background='transparent';
+						}	
 						var a = document.createElement('a');
 						a.setAttribute('href',node.url);
 						a.style.display='block';						
-						a.style.paddingTop='10px';
-						a.style.paddingBottom='10px';
 						a.style.width='100%';
-						a.style.borderLeft='5px solid transparent';
+						a.style.height='35px';
+						a.style.fontSize='14px'
 						a.style.textDecoration='none';
-						a.style.background='#ED5565';
-						a.style.color='#EEEEEE';
+						a.style.background='#F2F2F2';
+						a.style.color='#585858';
+						a.style.position='relative';
+						a.style.borderBottom='1px solid #E5E5E5';
+						a.style.borderRight='1px solid #CCCCCC';
 						a.onmouseover=function(){
-							this.style.background='#DA4453';
-							this.style.color='#FFFFFF';
+							this.style.background='#F8F8F8';
+							this.style.color='#2B7DBC';
 						}
 						a.onmouseout=function(){
-							this.style.background='#ED5565';
-							this.style.color='#EEEEEE';
+							this.style.background='#F2F2F2';
+							this.style.color='#585858';
 						}
-						var rspan = document.createElement('span');
-						rspan.setAttribute('class',node.icon);
-						rspan.style.marginLeft='15px';
-						rspan.style.textDecoration='none';
-						rspan.style.height='100%';
-						var mspan = document.createElement('span');
-						mspan.innerHTML = node.name;
-						mspan.style.marginLeft='15px';
-						mspan.style.height='100%';						
-						a.appendChild(rspan);
-						a.appendChild(mspan);
+						var menuBorder = document.createElement('span');
+						menuBorder.style.display='block';
+						menuBorder.style.position='absolute';
+						menuBorder.style.height='100%';
+						menuBorder.style.width='5px';
+						menuBorder.style.background='transparent';
+						var menuIcon = document.createElement('span');
+						menuIcon.setAttribute('class',node.icon);
+						menuIcon.style.display='block';
+						menuIcon.style.position='absolute';
+						menuIcon.style.left='10px';
+						menuIcon.style.top='10px';
+						var menuName = document.createElement('span');
+						menuName.innerHTML=node.name;
+						menuName.style.display='block';
+						menuName.style.position='absolute';
+						menuName.style.left='30px';
+						menuName.style.top='10px';
+						a.appendChild(menuBorder);
+						a.appendChild(menuIcon);
+						a.appendChild(menuName);
 						li.appendChild(a);
 						obj.firstChild.appendChild(li);
 					}else{
@@ -72,18 +96,20 @@
 						var level = parent.getAttribute("level");
 						if(parent!=null){
 							if(parent.childNodes.length==1){						
-								var span = document.createElement('span');
-								span.setAttribute('class','icon-angle-left');
-								span.style.textDecoration='none';
-								span.style.display='block';
-								span.style.float='right';								
-								span.style.marginRight='25px';														
-								parent.firstChild.appendChild(span);
-								parent.firstChild.setAttribute('href','javascript:void(0)');
+								var arrow = document.createElement('span');
+								arrow.setAttribute('class','icon-angle-left');
+								arrow.style.display='block';
+								arrow.style.fontSize='18px';
+								arrow.style.position='absolute';
+								arrow.style.right='10px';
+								arrow.style.top='10px';
+								parent.firstChild.appendChild(arrow);
+								parent.firstChild.setAttribute('href','javascript:;');
 								var ul = document.createElement("ul");
 								ul.style.padding='0';
 								ul.style.margin='0';
 								ul.style.display='none';
+								ul.style.listStyle='none';															
 								parent.appendChild(ul);
 							}
 							var li = document.createElement("li");
@@ -91,38 +117,50 @@
 							li.setAttribute("level", (parseInt(level)+1));													
 							li.style.width='100%';
 							li.style.display='block';
+							li.style.position='relative';
+							li.style.verticalAlign='middle';
 							var a = document.createElement('a');
 							a.setAttribute('href',node.url);
 							a.style.display='block';							
-							a.style.paddingTop='10px';
-							a.style.paddingBottom='10px';
 							a.style.width='100%';
+							a.style.height='35px';
+							a.style.fontSize='14px'
 							a.style.textDecoration='none';
-							a.style.background='#383838';
-							a.style.color='#EEEEEE';
-							a.style.borderLeft='5px solid #383838';
+							a.style.background='#FFFFFF';
+							a.style.color='#796161';
+							a.style.position='relative';
+							a.style.borderBottom='1px dotted #E5E5E5';
+							a.style.borderRight='1px solid #CCCCCC';
 							a.onmouseover=function(){
-								this.style.borderLeft='5px solid #DA4453';
-								this.style.color='#fff';
-								this.style.background='#282828';
+								this.style.color='#4BA3DA';
+								this.style.background='#F2F2F2';
 							}							
 							a.onmouseout=function(){
-								this.style.borderLeft='5px solid #383838';
-								this.style.color='#eee';
-								this.style.background='#383838';
-							}
-							var rspan = document.createElement('span');							
-							if(node.icon!=null||node.icon!=undefined||node.icon!=''||node.icon!='null'){
-								rspan.setAttribute('class',node.icon);
-							}
-							rspan.style.marginLeft=parseInt(level)*20+'px';								
-							var mspan = document.createElement('span');
-							mspan.innerHTML = node.name;
-							mspan.style.marginLeft='5px';
-							mspan.style.textDecoration='none';
-							mspan.style.height='100%';
-							a.appendChild(rspan);
-							a.appendChild(mspan);
+								this.style.color='#796161';
+								this.style.background='#FFFFFF';
+							}							
+							var verticalLine = document.createElement('span');							
+							verticalLine.style.display='block';
+							verticalLine.style.position='absolute';
+							verticalLine.style.left=parseInt(level)*20+'px';
+							verticalLine.style.borderLeft='1px dotted #9DBDD6';
+							verticalLine.style.height='100%';
+							var horizontalLine = document.createElement('span');							
+							horizontalLine.style.display='block';
+							horizontalLine.style.position='absolute';
+							horizontalLine.style.left=parseInt(level)*20+'px';
+							horizontalLine.style.top='50%';
+							horizontalLine.style.borderTop='1px dotted #9DBDD6';
+							horizontalLine.style.width='10px';
+							var menuName = document.createElement('span');
+							menuName.innerHTML = node.name;
+							menuName.style.display='block';
+							menuName.style.position='absolute';
+							menuName.style.left=(parseInt(level)*20+20)+'px';
+							menuName.style.top='10px';	
+							a.appendChild(verticalLine);
+							a.appendChild(horizontalLine);
+							a.appendChild(menuName);
 							li.appendChild(a);
 							parent.lastChild.appendChild(li);							
 						}else{
@@ -130,7 +168,7 @@
 							temp.innerHTML = "id为"+node.id+"的父节点"+node.pid+"没有找到";
 							obj.appendChild(temp);
 						}
-					}
+					}					
 				}
 				//让a标签点击隐藏和展开
 				var as = obj.getElementsByTagName("a");
