@@ -18,13 +18,13 @@
 	</head>
 	<body>
 		<div id="sidebar" style="width: 240px;"></div>				
-		
+
 		<script type="text/javascript">			
 			var div = document.getElementById('sidebar');
 			var nodes = [
-				{"id":"1000","pid":"1001","name":"二級菜單","icon":"","url":"#"},
-				{"id":"1001","pid":"#","name":"一級菜單","icon":"icon-music","url":"#"},
-				{"id":"1002","pid":"#","name":"一級菜單","icon":"icon-music","url":"#"},
+				{"id":"1000","pid":"1001","name":"二級菜單","icon":"","url":"/gw/sidebar.html"},
+				{"id":"1001","pid":"#","name":"一級菜單","icon":"img/a003.png","url":"#"},
+				{"id":"1002","pid":"#","name":"一級菜單","icon":"img/a002.png","url":"#"},
 				{"id":"1003","pid":"1001","name":"二級菜單","icon":"icon-music","url":"#"},
 				{"id":"1004","pid":"1001","name":"二級菜單","icon":"icon-music","url":"#"},
 				{"id":"1005","pid":"1002","name":"二級菜單","icon":"icon-music","url":"#"},
@@ -41,7 +41,8 @@
 				{"id":"1016","pid":"1014","name":"三級菜單","icon":"icon-music","url":"#"},
 				{"id":"1017","pid":"1014","name":"三級菜單","icon":"icon-music","url":"#"}
 			];
-			gw.sidebar.init(div,nodes);				
+			gw.sidebar.init(div,nodes);	
+
 		</script>
 	</body>
 </html>

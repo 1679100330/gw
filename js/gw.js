@@ -2,7 +2,7 @@
 	function _gw(){}
 	_gw.prototype.sidebar=new function(){
 		return{
-			init:function(obj,nodes){				
+			init:function(obj,nodes){					
 				//清除obj下的子节点
 				var childs = obj.childNodes;
 				for(var i=0;i<childs.length;i++){
@@ -50,6 +50,7 @@
 						}	
 						var a = document.createElement('a');
 						a.setAttribute('href',node.url);
+						a.setAttribute('url',node.url);
 						a.style.display='block';						
 						a.style.width='100%';
 						a.style.height='35px';
@@ -69,23 +70,31 @@
 							this.style.color='#585858';
 						}
 						var menuBorder = document.createElement('span');
+						menuBorder.setAttribute("cate","border");
 						menuBorder.style.display='block';
 						menuBorder.style.position='absolute';
 						menuBorder.style.height='100%';
 						menuBorder.style.width='5px';
 						menuBorder.style.background='transparent';
+						var menuImg = document.createElement('img');
+						menuImg.setAttribute("src",node.icon);
+						menuImg.setAttribute("height","25");
+						menuImg.style.border='0';
 						var menuIcon = document.createElement('span');
 						menuIcon.setAttribute('class',node.icon);
 						menuIcon.style.display='block';
 						menuIcon.style.position='absolute';
 						menuIcon.style.left='10px';
-						menuIcon.style.top='10px';
+						menuIcon.style.top='5px';
+						menuIcon.appendChild(menuImg);
 						var menuName = document.createElement('span');
+						menuName.setAttribute("cate","name");
 						menuName.innerHTML=node.name;
 						menuName.style.display='block';
 						menuName.style.position='absolute';
-						menuName.style.left='30px';
-						menuName.style.top='10px';
+						menuName.style.left='40px';
+						menuName.style.top='8px';
+						menuName.style.fontSize='16px';
 						a.appendChild(menuBorder);
 						a.appendChild(menuIcon);
 						a.appendChild(menuName);
@@ -95,14 +104,18 @@
 						var parent = document.getElementById("li_"+node.pid);
 						var level = parent.getAttribute("level");
 						if(parent!=null){
-							if(parent.childNodes.length==1){						
+							if(parent.childNodes.length==1){	
+								var arrowImg = document.createElement('img');
+								arrowImg.setAttribute("src","img/arrow_left.png");
+								arrowImg.setAttribute("height","16");
+								arrowImg.style.border='0';
 								var arrow = document.createElement('span');
-								arrow.setAttribute('class','icon-angle-left');
+								arrow.setAttribute("cate","arrow");
 								arrow.style.display='block';
-								arrow.style.fontSize='18px';
 								arrow.style.position='absolute';
 								arrow.style.right='10px';
 								arrow.style.top='10px';
+								arrow.appendChild(arrowImg);
 								parent.firstChild.appendChild(arrow);
 								parent.firstChild.setAttribute('href','javascript:;');
 								var ul = document.createElement("ul");
@@ -121,6 +134,7 @@
 							li.style.verticalAlign='middle';
 							var a = document.createElement('a');
 							a.setAttribute('href',node.url);
+							a.setAttribute('url',node.url);
 							a.style.display='block';							
 							a.style.width='100%';
 							a.style.height='35px';
@@ -182,20 +196,35 @@
 								var uls = ul.getElementsByTagName('ul');
 								for(var j=0;j<uls.length;j++){
 									uls[j].style.display='none';
-									uls[j].parentNode.firstChild.lastChild.setAttribute("class","icon-angle-left");
+									uls[j].parentNode.firstChild.lastChild.firstChild.setAttribute("src","img/arrow_left.png");
 								}
 								//展开
 								ul.style.display='block';											
-								this.lastChild.setAttribute("class","icon-angle-down");						
+								this.lastChild.firstChild.setAttribute("src","img/arrow_bottom.png");						
 							}else{
 								ul.style.display='none';						
-								this.lastChild.setAttribute("class","icon-angle-left");
+								this.lastChild.firstChild.setAttribute("src","img/arrow_left.png");
 							}
 						}
 						if(!typeof(callback)=="undefined"){ 
 							callback(this);
 						}
 					}					
+				}
+				//根据当前url地址展开对应的菜单
+				var url = window.location.href.toLowerCase().replace("//","");
+				url=url.substring(url.indexOf("/"));
+				for(var i=0;i<as.length;i++){
+					var aUrl = as[i].getAttribute("url");
+					if(url==aUrl){
+						var spans = as[i].getElementsByTagName("span");
+						for(var k=0;k<spans.length;k++){
+							var cate = spans[k].getAttribute("cate");
+							if(cate=="name"){
+								//--未实现
+							}
+						}
+					}
 				}
 			}
 		}
